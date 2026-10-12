@@ -1,0 +1,206 @@
+/* ===== Cores e fonte em um só lugar ===== */
+:root {
+    --cor-principal: #c8102e;      /* vermelho cereja */
+    --cor-principal-escura: #9e0c24;
+    --cor-fundo: #fbf7f4;
+    --cor-rosa-claro: #f7e1e5;
+    --cor-texto: #2b2024;
+    --cor-card: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+}
+
+h1, h2, .logo {
+    font-family: Georgia, serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ===== Cabeçalho ===== */
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background-color: var(--cor-card);
+    border-bottom: 1px solid var(--cor-rosa-claro);
+    position: sticky;
+    top: 0;
+}
+
+.logo {
+    font-size: 1.4rem;
+    color: var(--cor-principal);
+    font-weight: bold;
+}
+
+.menu {
+    display: flex;
+    gap: 24px;
+}
+
+.menu a:hover {
+    color: var(--cor-principal);
+}
+
+.botao-menu {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--cor-principal);
+    cursor: pointer;
+}
+
+/* ===== Botão ===== */
+.botao {
+    display: inline-block;
+    background-color: var(--cor-principal);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.botao:hover {
+    background-color: var(--cor-principal-escura);
+}
+
+/* ===== Hero (faixa principal) ===== */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background-color: var(--cor-rosa-claro);
+}
+
+.hero h1 {
+    font-size: 2.4rem;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    margin-bottom: 24px;
+}
+
+/* ===== Seções e grades ===== */
+.secao {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 20px;
+}
+
+.secao h2 {
+    margin-bottom: 24px;
+    font-size: 1.8rem;
+}
+
+.grade {
+    display: grid;
+    gap: 20px;
+}
+
+.grade-3 { grid-template-columns: repeat(3, 1fr); }
+.grade-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* ===== Categorias ===== */
+.categoria {
+    background-color: var(--cor-card);
+    border: 1px solid var(--cor-rosa-claro);
+    border-radius: 12px;
+    padding: 32px 16px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.categoria:hover {
+    border-color: var(--cor-principal);
+}
+
+/* ===== Cards de produto ===== */
+.produto {
+    background-color: var(--cor-card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--cor-rosa-claro);
+}
+
+.produto-imagem {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: var(--cor-rosa-claro);
+}
+
+.produto-info {
+    padding: 16px;
+}
+
+.produto-info h3 {
+    margin-bottom: 4px;
+}
+
+.produto-info p {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.produto-preco {
+    font-weight: bold;
+    color: var(--cor-principal);
+    font-size: 1.1rem;
+}
+
+/* ===== Rodapé ===== */
+.rodape {
+    text-align: center;
+    padding: 24px 20px;
+    background-color: var(--cor-texto);
+    color: white;
+    font-size: 0.9rem;
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 900px) {
+    .grade-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .cabecalho { padding: 12px 16px; }
+
+    .botao-menu { display: block; }
+
+    .menu {
+        display: none;               /* escondido no celular */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--cor-card);
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .menu.aberto { display: flex; }  /* classe adicionada pelo JavaScript */
+
+    .grade-3,
+    .grade-4 { grid-template-columns: 1fr; }
+
+    .hero h1 { font-size: 1.8rem; }
+}

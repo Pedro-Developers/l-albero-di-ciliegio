@@ -1,15 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>l-albero-di-ciliegio</title>
+    <title>l'albero di ciliegio | Decoração e casa</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <section>
-    <h1>l-albero-di-ciliegio</h1>
-    <nav>a</nav>
-    <label for=""></label>
-</section>
+
+    <header class="cabecalho">
+        <a href="index.html" class="logo">🍒 l'albero di ciliegio</a>
+
+        <button id="botao-menu" class="botao-menu" aria-label="Abrir menu">☰</button>
+
+        <nav id="menu" class="menu">
+            <a href="index.html">Início</a>
+            <a href="#categorias">Categorias</a>
+            <a href="#destaques">Produtos</a>
+            <a href="#">Carrinho</a>
+            <a href="#">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Peças artesanais para uma casa delicada</h1>
+            <p>Vasos, cerâmicas e velas inspirados nas flores de cerejeira.</p>
+            <a href="#destaques" class="botao">Ver produtos</a>
+        </section>
+
+        <section id="categorias" class="secao">
+            <h2>Categorias</h2>
+            <div class="grade grade-3">
+                <a href="#" class="categoria">🏺 Vasos</a>
+                <a href="#" class="categoria">🍽️ Cerâmicas</a>
+                <a href="#" class="categoria">🕯️ Velas</a>
+            </div>
+        </section>
+
+        <section id="destaques" class="secao">
+            <h2>Produtos em destaque</h2>
+            <div id="lista-produtos" class="grade grade-4"></div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <p>© 2026 l'albero di ciliegio. Projeto escolar: loja fictícia, nenhum pagamento é real.</p>
+    </footer>
+
+    <script src="produtos.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
