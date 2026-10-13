@@ -115,4 +115,4 @@ function configurarMenu() {
 }
 
 mostrarProdutos();
-configurarMenu();
+configurarMenu(); 
