@@ -9,6 +9,22 @@ function salvarCarrinho(carrinho) {
     sessionStorage.setItem(chaveCarrinho, JSON.stringify(carrinho));
 }
 
+function calcularTotalEmCentavos(carrinho) {
+    let total = 0;
+
+    for (const item of carrinho) {
+        const produto = produtos.find(function (produtoLoja) {
+            return produtoLoja.id === item.id;
+        });
+
+        if (produto) {
+            total += Math.round(produto.preco * 100) * item.quantidade;
+        }
+    }
+
+    return total;
+}
+
 function adicionarAoCarrinho(idProduto) {
     const carrinho = obterCarrinho();
     const itemExistente = carrinho.find(function (item) {
@@ -58,18 +74,20 @@ function renderizarCarrinho() {
 
     const carrinho = obterCarrinho();
     const totalElemento = document.getElementById("total-carrinho");
+    const mensagemCarrinho = document.getElementById("mensagem-carrinho");
     const linkCheckout = document.getElementById("checkout-link");
 
     if (carrinho.length === 0) {
         lista.innerHTML = '<p class="carrinho-vazio">Seu carrinho está vazio.</p>';
         totalElemento.textContent = formatarPreco(0);
+        mensagemCarrinho.textContent = "";
         linkCheckout.hidden = true;
         return;
     }
 
     let html = "";
-    let totalEmCentavos = 0;
     let quantidadeDisponivel = 0;
+    let possuiProdutoIndisponivel = false;
 
     for (const item of carrinho) {
         const produto = produtos.find(function (produtoLoja) {
@@ -77,6 +95,7 @@ function renderizarCarrinho() {
         });
 
         if (!produto) {
+            possuiProdutoIndisponivel = true;
             html += `
                 <article class="item-carrinho">
                     <p>Um produto salvo não está mais disponível.</p>
@@ -90,7 +109,6 @@ function renderizarCarrinho() {
         }
 
         const subtotalEmCentavos = Math.round(produto.preco * 100) * item.quantidade;
-        totalEmCentavos += subtotalEmCentavos;
         quantidadeDisponivel += 1;
 
         html += `
@@ -119,8 +137,15 @@ function renderizarCarrinho() {
     }
 
     lista.innerHTML = html;
-    totalElemento.textContent = formatarPreco(totalEmCentavos / 100);
-    linkCheckout.hidden = quantidadeDisponivel === 0;
+    if (possuiProdutoIndisponivel) {
+        totalElemento.textContent = "Revise os itens";
+        mensagemCarrinho.textContent =
+            "Remova os produtos indisponíveis antes de continuar para a finalização.";
+    } else {
+        totalElemento.textContent = formatarPreco(calcularTotalEmCentavos(carrinho) / 100);
+        mensagemCarrinho.textContent = "";
+    }
+    linkCheckout.hidden = quantidadeDisponivel === 0 || possuiProdutoIndisponivel;
 }
 
 function configurarAdicionarAoCarrinho() {

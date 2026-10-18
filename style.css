@@ -630,3 +630,199 @@ align-items: center;
         padding: 16px;
     }
 }
+
+/* ===== Checkout simulado ===== */
+.aviso-simulacao,
+.aviso-carrinho-vazio {
+    margin-bottom: 24px;
+    padding: 16px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 10px;
+    background-color: var(--cor-rosa-claro);
+}
+
+.aviso-carrinho-vazio a {
+    color: var(--cor-principal-escura);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(250px, 0.8fr);
+    align-items: start;
+    gap: 28px;
+}
+
+.checkout-layout[hidden],
+.aviso-carrinho-vazio[hidden],
+.campos-cartao[hidden],
+.campo-parcelas[hidden],
+.confirmacao-pedido[hidden] {
+    display: none;
+}
+
+.form-checkout {
+    display: grid;
+    gap: 20px;
+}
+
+.grupo-formulario {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--cor-rosa-claro);
+    border-radius: 12px;
+}
+
+.grupo-formulario legend {
+    padding: 0 8px;
+    font-family: Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.grupo-formulario label {
+    font-weight: bold;
+}
+
+.grupo-formulario input:not([type="radio"]),
+.grupo-formulario select {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 11px;
+    border: 1px solid #cdbdc0;
+    border-radius: 6px;
+    background-color: var(--cor-card);
+    color: var(--cor-texto);
+    font: inherit;
+}
+
+.grupo-formulario input:focus,
+.grupo-formulario select:focus {
+    outline: 2px solid var(--cor-principal);
+    outline-offset: 2px;
+}
+
+.campos-duplos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.campos-duplos > div {
+    display: grid;
+    gap: 8px;
+}
+
+.opcoes-pagamento {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.opcao-pagamento {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--cor-rosa-claro);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.campos-cartao,
+.campo-parcelas {
+    display: grid;
+    gap: 10px;
+}
+
+.campos-cartao {
+    margin-top: 12px;
+}
+
+.campo-parcelas {
+    margin-top: 4px;
+}
+
+.previa-parcelas {
+    color: var(--cor-principal-escura);
+    font-size: 0.9rem;
+}
+
+.resumo-checkout {
+    padding: 20px;
+    border: 1px solid var(--cor-rosa-claro);
+    border-radius: 12px;
+    background-color: var(--cor-card);
+}
+
+.resumo-checkout h2 {
+    margin-bottom: 16px;
+    font-family: Georgia, serif;
+}
+
+.resumo-checkout ul {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.resumo-checkout li,
+.total-checkout {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.resumo-checkout li {
+    font-size: 0.9rem;
+}
+
+.total-checkout {
+    margin: 20px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--cor-rosa-claro);
+    font-size: 1.1rem;
+}
+
+.resumo-checkout > a {
+    color: var(--cor-principal);
+    font-weight: bold;
+}
+
+.confirmacao-pedido {
+    padding: 32px;
+    border: 1px solid var(--cor-rosa-claro);
+    border-radius: 12px;
+    background-color: var(--cor-card);
+    text-align: center;
+}
+
+.confirmacao-pedido h2 {
+    margin: 8px 0;
+}
+
+.confirmacao-pedido .botao {
+    margin-top: 20px;
+}
+
+@media (max-width: 800px) {
+    .checkout-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .grupo-formulario {
+        padding: 14px;
+    }
+
+    .campos-duplos,
+    .opcoes-pagamento {
+        grid-template-columns: 1fr;
+    }
+}
