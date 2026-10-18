@@ -1,11 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="Demonstração de cadastro e login da l'albero di ciliegio.">
+    <title>Cadastro e login | l'albero di ciliegio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <header class="cabecalho">
+        <a href="index.html" class="logo"><span aria-hidden="true">🌸</span> l'albero di ciliegio</a>
+
+        <button id="botao-menu" class="botao-menu" type="button"
+                aria-label="Abrir menu" aria-controls="menu" aria-expanded="false">
+            ☰
+        </button>
+
+        <nav id="menu" class="menu" aria-label="Navegação principal">
+            <a href="index.html">Início</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="index.html#categorias">Categorias</a>
+            <a href="compra.html">Carrinho</a>
+            <a href="cadastro.html" aria-current="page">Cadastro / Login</a>
+        </nav>
+    </header>
+
+    <main class="secao pagina-acesso">
+        <div class="secao-cabecalho">
+            <p class="texto-destaque">Área demonstrativa</p>
+            <h1>Cadastro e login</h1>
+        </div>
+
+        <p class="aviso-simulacao">
+            <strong>Simulação escolar:</strong> não use uma senha real. Este site não cria contas,
+            não inicia sessões e não envia nem armazena os dados digitados.
+        </p>
+
+        <div class="alternar-acesso" role="group" aria-label="Escolher cadastro ou login">
+            <button id="mostrar-login" class="botao botao-secundario" type="button"
+                    aria-controls="painel-login" aria-pressed="true">
+                Entrar
+            </button>
+            <button id="mostrar-cadastro" class="botao botao-secundario" type="button"
+                    aria-controls="painel-cadastro" aria-pressed="false">
+                Criar cadastro
+            </button>
+        </div>
+
+        <section id="painel-login" class="painel-acesso" aria-labelledby="titulo-login">
+            <h2 id="titulo-login">Entrar na sua conta</h2>
+            <form id="form-login" class="form-acesso">
+                <label for="email-login">E-mail</label>
+                <input id="email-login" name="email" type="email" autocomplete="off" required>
+
+                <label for="senha-login">Senha fictícia</label>
+                <input id="senha-login" name="senha" type="password" minlength="8"
+                       autocomplete="off" required>
+
+                <button class="botao" type="submit">Testar login</button>
+            </form>
+        </section>
+
+        <section id="painel-cadastro" class="painel-acesso" aria-labelledby="titulo-cadastro" hidden>
+            <h2 id="titulo-cadastro">Criar cadastro demonstrativo</h2>
+            <form id="form-cadastro" class="form-acesso">
+                <label for="nome-cadastro">Nome</label>
+                <input id="nome-cadastro" name="nome" type="text" minlength="2" autocomplete="off" required>
+
+                <label for="email-cadastro">E-mail</label>
+                <input id="email-cadastro" name="email" type="email" autocomplete="off" required>
+
+                <label for="senha-cadastro">Crie uma senha fictícia (mínimo 8 caracteres)</label>
+                <input id="senha-cadastro" name="senha" type="password" minlength="8"
+                       autocomplete="new-password" required>
+
+                <label for="confirmar-senha">Confirme a senha fictícia</label>
+                <input id="confirmar-senha" name="confirmar-senha" type="password" minlength="8"
+                       autocomplete="new-password" required>
+
+                <button class="botao" type="submit">Testar cadastro</button>
+            </form>
+        </section>
+
+        <p id="mensagem-acesso" class="mensagem-acesso" role="status" aria-live="polite"></p>
+    </main>
+
+    <footer class="rodape">
+        <p><strong>l'albero di ciliegio</strong> | Decoração artesanal para sua casa.</p>
+        <p>Projeto escolar: cadastro, login, compra e pagamento são apenas simulações.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/acesso.js"></script>
 </body>
 </html>

@@ -826,3 +826,79 @@ align-items: center;
         grid-template-columns: 1fr;
     }
 }
+
+/* ===== Cadastro e login demonstrativos ===== */
+.pagina-acesso {
+    max-width: 760px;
+}
+
+.alternar-acesso {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.alternar-acesso button[aria-pressed="true"] {
+    background-color: var(--cor-principal);
+    color: white;
+}
+
+.painel-acesso {
+    padding: 24px;
+    border: 1px solid var(--cor-rosa-claro);
+    border-radius: 12px;
+    background-color: var(--cor-card);
+}
+
+.painel-acesso[hidden] {
+    display: none;
+}
+
+.painel-acesso h2 {
+    margin-bottom: 16px;
+    font-family: Georgia, serif;
+}
+
+.form-acesso {
+    display: grid;
+    gap: 12px;
+}
+
+.form-acesso label {
+    font-weight: bold;
+}
+
+.form-acesso input {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 11px;
+    border: 1px solid #cdbdc0;
+    border-radius: 6px;
+    background-color: var(--cor-card);
+    color: var(--cor-texto);
+    font: inherit;
+}
+
+.form-acesso input:focus {
+    outline: 2px solid var(--cor-principal);
+    outline-offset: 2px;
+}
+
+.form-acesso button {
+    justify-self: start;
+    margin-top: 8px;
+}
+
+.mensagem-acesso {
+    min-height: 1.6em;
+    margin-top: 16px;
+    color: var(--cor-principal-escura);
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .painel-acesso {
+        padding: 16px;
+    }
+}
