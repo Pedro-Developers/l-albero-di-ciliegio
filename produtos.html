@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conheça vasos, cerâmicas e velas da l'albero di ciliegio.">
+    <title>Produtos | l'albero di ciliegio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="cabecalho">
+        <a href="index.html" class="logo"><span aria-hidden="true">🌸</span> l'albero di ciliegio</a>
+
+        <button id="botao-menu" class="botao-menu" type="button"
+                aria-label="Abrir menu" aria-controls="menu" aria-expanded="false">
+            ☰
+        </button>
+
+        <nav id="menu" class="menu" aria-label="Navegação principal">
+            <a href="index.html">Início</a>
+            <a href="produtos.html" aria-current="page">Produtos</a>
+            <a href="index.html#categorias">Categorias</a>
+            <a href="compra.html">Carrinho</a>
+            <a href="cadastro.html">Cadastro</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="catalogo-intro">
+            <p class="texto-destaque">Feito para trazer aconchego</p>
+            <h1>Produtos para sua casa</h1>
+            <p>Explore nossa coleção de peças inspiradas na delicadeza das flores de cerejeira.</p>
+            <a class="botao" href="#vasos">Ver coleção</a>
+        </section>
+
+        <nav class="atalhos-categorias" aria-label="Atalhos para categorias">
+            <a href="#vasos">🏺 Vasos</a>
+            <a href="#ceramicas">🍽️ Cerâmicas</a>
+            <a href="#velas">🕯️ Velas</a>
+        </nav>
+
+        <div id="lista-catalogo" class="secao catalogo-lista"></div>
+    </main>
+
+    <footer class="rodape">
+        <p><strong>l'albero di ciliegio</strong> | Decoração artesanal para sua casa.</p>
+        <p>Projeto escolar: compra e pagamento são apenas uma simulação.</p>
+    </footer>
+
+    <script src="js/produtos.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

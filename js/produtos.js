@@ -7,7 +7,7 @@ const produtos = [
         categoria: "vasos",
         descricao: "Vaso de cerâmica rosa feito à mão.",
         preco: 89.90,
-        imagem: "img/vaso-sakura.jpg"
+        imagem: "img/vaso-sakura.svg"
     },
     {
         id: 2,
@@ -15,7 +15,7 @@ const produtos = [
         categoria: "vasos",
         descricao: "Vaso branco com acabamento fosco.",
         preco: 129.90,
-        imagem: "img/vaso-petala.jpg"
+        imagem: "img/vaso-petala.svg"
     },
     {
         id: 3,
@@ -23,7 +23,7 @@ const produtos = [
         categoria: "ceramicas",
         descricao: "Prato decorativo pintado à mão.",
         preco: 59.90,
-        imagem: "img/prato-ciliegio.jpg"
+        imagem: "img/prato-ciliegio.svg"
     },
     {
         id: 4,
@@ -31,6 +31,6 @@ const produtos = [
         categoria: "velas",
         descricao: "Vela aromática de cerejeira, 200 g.",
         preco: 39.90,
-        imagem: "img/vela-cerejeira.jpg"
+        imagem: "img/vela-cerejeira.svg"
     }
 ];

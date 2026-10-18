@@ -3,52 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>l'albero di ciliegio | Decoração e casa</title>
+    <meta name="description" content="Decoração artesanal para deixar sua casa mais acolhedora.">
+    <title>l'albero di ciliegio | Decoração artesanal</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <header class="cabecalho">
-        <a href="index.html" class="logo"> l'albero di ciliegio</a>
+        <a href="index.html" class="logo"><span aria-hidden="true">🌸</span> l'albero di ciliegio</a>
 
-        <button id="botao-menu" class="botao-menu" aria-label="Abrir menu">☰</button>
+        <button id="botao-menu" class="botao-menu" type="button"
+                aria-label="Abrir menu" aria-controls="menu" aria-expanded="false">
+            ☰
+        </button>
 
-        <nav id="menu" class="menu">
-            <a href="index.html">Início</a>
+        <nav id="menu" class="menu" aria-label="Navegação principal">
+            <a href="index.html" aria-current="page">Início</a>
+            <a href="produtos.html">Produtos</a>
             <a href="#categorias">Categorias</a>
-            <a href="#destaques">Produtos</a>
-            <a href="#">Carrinho</a>
-            <a href="#">Entrar</a>
+            <a href="compra.html">Carrinho</a>
+            <a href="cadastro.html">Cadastro</a>
         </nav>
     </header>
 
     <main>
         <section class="hero">
-            <h1>Peças artesanais para uma casa delicada</h1>
-            <p>Vasos, cerâmicas e velas inspirados nas flores de cerejeira.</p>
-            <a href="#destaques" class="botao">Ver produtos</a>
-        </section>
-
-        <section id="categorias" class="secao">
-            <h2>Categorias</h2>
-            <div class="grade grade-3">
-                <a href="#" class="categoria">🏺 Vasos</a>
-                <a href="#" class="categoria">🍽️ Cerâmicas</a>
-                <a href="#" class="categoria">🕯️ Velas</a>
+            <div class="hero-conteudo">
+                <p class="hero-etiqueta">Detalhes feitos com carinho</p>
+                <h1>Uma casa mais bonita, no seu próprio ritmo.</h1>
+                <p>Decoração artesanal inspirada na delicadeza das flores de cerejeira.</p>
+                <a href="produtos.html" class="botao">Conheça os produtos</a>
+            </div>
+            <div class="hero-ilustracao" aria-hidden="true">
+                <span>🌸</span>
+                <span>🏺</span>
+                <span>🌿</span>
             </div>
         </section>
 
-        <section id="destaques" class="secao">
-            <h2>Produtos em destaque</h2>
+        <section id="categorias" class="secao">
+            <div class="secao-cabecalho">
+                <p class="texto-destaque">Encontre seu detalhe favorito</p>
+                <h2>Categorias</h2>
+            </div>
+            <div class="grade grade-3">
+                <a href="produtos.html#vasos" class="categoria">
+                    <span class="categoria-icone" aria-hidden="true">🏺</span>
+                    <span class="categoria-titulo">Vasos</span>
+                    <span class="categoria-descricao">Formas e cores para suas flores.</span>
+                </a>
+                <a href="produtos.html#ceramicas" class="categoria">
+                    <span class="categoria-icone" aria-hidden="true">🍽️</span>
+                    <span class="categoria-titulo">Cerâmicas</span>
+                    <span class="categoria-descricao">Peças especiais para decorar e usar.</span>
+                </a>
+                <a href="produtos.html#velas" class="categoria">
+                    <span class="categoria-icone" aria-hidden="true">🕯️</span>
+                    <span class="categoria-titulo">Velas</span>
+                    <span class="categoria-descricao">Um toque acolhedor para cada ambiente.</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="destaques" class="secao secao-destaques">
+            <div class="secao-cabecalho">
+                <p class="texto-destaque">Escolhas da nossa loja</p>
+                <h2>Produtos em destaque</h2>
+            </div>
             <div id="lista-produtos" class="grade grade-4"></div>
+            <a href="produtos.html" class="link-mais-produtos">Ver todos os produtos <span aria-hidden="true">→</span></a>
         </section>
     </main>
 
     <footer class="rodape">
-        <p>© 2026 l'albero di ciliegio. Projeto escolar: loja fictícia, nenhum pagamento é real.</p>
+        <p><strong>l'albero di ciliegio</strong> | Decoração artesanal para sua casa.</p>
+        <p>Projeto escolar: compra e pagamento são apenas uma simulação.</p>
     </footer>
 
-    <script src="/js/produtos.js"></script>
-    <script src="/js/script.js"></script>
+    <script src="js/produtos.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

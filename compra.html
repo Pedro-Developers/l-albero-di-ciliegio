@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Revise os produtos selecionados na l'albero di ciliegio.">
+    <title>Carrinho | l'albero di ciliegio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="cabecalho">
+        <a href="index.html" class="logo"><span aria-hidden="true">🌸</span> l'albero di ciliegio</a>
+
+        <button id="botao-menu" class="botao-menu" type="button"
+                aria-label="Abrir menu" aria-controls="menu" aria-expanded="false">
+            ☰
+        </button>
+
+        <nav id="menu" class="menu" aria-label="Navegação principal">
+            <a href="index.html">Início</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="index.html#categorias">Categorias</a>
+            <a href="compra.html" aria-current="page">Carrinho</a>
+            <a href="cadastro.html">Cadastro</a>
+        </nav>
+    </header>
+
+    <main class="secao pagina-carrinho">
+        <div class="secao-cabecalho">
+            <p class="texto-destaque">Sua seleção</p>
+            <h1>Meu carrinho</h1>
+        </div>
+
+        <div id="lista-carrinho" class="lista-carrinho" aria-live="polite"></div>
+
+        <section class="resumo-carrinho" aria-label="Resumo do pedido">
+            <p>Total da compra</p>
+            <p id="total-carrinho" class="produto-preco">R$ 0,00</p>
+        </section>
+
+        <p id="mensagem-carrinho" class="mensagem-carrinho" role="status"></p>
+
+        <div class="acoes-carrinho">
+            <a href="produtos.html" class="botao botao-secundario">Continuar comprando</a>
+            <a id="checkout-link" href="checkout.html" class="botao" hidden>Ir para finalização</a>
+        </div>
+    </main>
+
+    <footer class="rodape">
+        <p><strong>l'albero di ciliegio</strong> | Decoração artesanal para sua casa.</p>
+        <p>Projeto escolar: compra e pagamento são apenas uma simulação.</p>
+    </footer>
+
+    <script src="js/produtos.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/carrinho.js"></script>
+</body>
+</html>

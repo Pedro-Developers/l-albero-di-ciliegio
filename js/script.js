@@ -1,76 +1,3 @@
-let esqueceuasenha = document.getElementById("forgot-password");
-let lembreme = document.getElementById("remember-me");
-let googleSigninButton = document.getElementById("google-signin-button");
-let appleSigninButton = document.getElementById("apple-signin-button");
-
-
-
-
-
-esqueceuasenha.addEventListener("click", function() {
-    let email = prompt("Por favor, insira seu e-mail para redefinir a senha:");
-});
-
-  function handleCredentialResponse(response) {
-    console.log("Encoded JWT ID token: " + response.credential);
-    // Envie este token (response.credential) para o seu backend para validar e criar a sessão do usuário.
-  }
-
-  window.onload = function () {
-    google.accounts.id.initialize({
-      client_id: 'SEU_CLIENT_ID_DO_://googleusercontent.com',
-      callback: handleCredentialResponse,
-      auto_select: true // Tenta selecionar a conta automaticamente se o usuário já estiver logado no navegador
-    });
-
-    // Exibe o prompt do One Tap
-    google.accounts.id.prompt((notification) => {
-      if (notification.isNotDisplayed()) {
-        console.log(notification.getNotDisplayedReason());
-      }
-    });
-  };
-
-  if (window.location.search.includes('error=access_denied')) {
-    alert('Acesso negado. Por favor, tente novamente.');
-  }
-
-if (googleSigninButton) {
-  googleSigninButton.addEventListener("click", function() {
-    // Lógica para o botão de login com Google
-  });
-}
-
-
-
-
-    // 1. Inicialize com as suas credenciais do Apple Developer
-    AppleID.auth.init({
-        clientId : 'http://127.0.0.1:5500/index.html.si', // Substitua pelo seu Client ID registrado no Apple Developer
-        scope : 'name email', // Escopo de informações que você deseja solicitar ao usuário
-        redirectURI : 'http://127.0.0.1:5500/index.html',
-        usePopup : true // Define se abrirá em formato Pop-up ou Redirecionamento completo
-    });
-
-    // 2. Chame a função de login programaticamente
-    async function tentarLogarComApple() {
-        try {
-            const data = await AppleID.auth.signIn();
-            // Usuário autenticado com sucesso! 
-            // Envie os dados (id_token) para o seu servidor validar.
-            console.log(data);
-        } catch (error) {
-            // Trate o erro ou o cancelamento do usuário
-            console.error(error);
-        }
-    }
-if (appleSigninButton) {
-  appleSigninButton.addEventListener("click", function() {
-    tentarLogarComApple();
-  });
-}
-
-// Recebe um número (89.9) e devolve texto formatado ("R$ 89,90").
 function formatarPreco(valor) {
     return valor.toLocaleString("pt-BR", {
         style: "currency",
@@ -78,23 +5,33 @@ function formatarPreco(valor) {
     });
 }
 
-// Recebe UM produto (objeto) e devolve o HTML do card dele.
 function criarCardProduto(produto) {
     return `
         <article class="produto">
-            <img class="produto-imagem" src="${produto.imagem}" alt="${produto.nome}">
+            <img class="produto-imagem" src="${produto.imagem}" alt="${produto.nome}" loading="lazy">
             <div class="produto-info">
                 <h3>${produto.nome}</h3>
                 <p>${produto.descricao}</p>
                 <span class="produto-preco">${formatarPreco(produto.preco)}</span>
+                <a class="botao botao-detalhes" href="produto.html?id=${produto.id}">Ver detalhes</a>
             </div>
         </article>
     `;
 }
 
-// Percorre a lista de produtos e coloca os cards dentro da div #lista-produtos.
+const categorias = [
+    { id: "vasos", nome: "Vasos" },
+    { id: "ceramicas", nome: "Cerâmicas" },
+    { id: "velas", nome: "Velas" }
+];
+
 function mostrarProdutos() {
     const lista = document.getElementById("lista-produtos");
+
+    if (!lista) {
+        return;
+    }
+
     let html = "";
 
     for (const produto of produtos) {
@@ -104,15 +41,113 @@ function mostrarProdutos() {
     lista.innerHTML = html;
 }
 
-// Abre e fecha o menu no celular.
+function mostrarCatalogo() {
+    const catalogo = document.getElementById("lista-catalogo");
+
+    if (!catalogo) {
+        return;
+    }
+
+    let html = "";
+
+    for (const categoria of categorias) {
+        const produtosDaCategoria = produtos.filter(function (produto) {
+            return produto.categoria === categoria.id;
+        });
+
+        if (produtosDaCategoria.length === 0) {
+            continue;
+        }
+
+        html += `
+            <section class="catalogo-categoria" id="${categoria.id}">
+                <h2>${categoria.nome}</h2>
+                <div class="grade grade-4">
+        `;
+
+        for (const produto of produtosDaCategoria) {
+            html += criarCardProduto(produto);
+        }
+
+        html += `
+                </div>
+            </section>
+        `;
+    }
+
+    catalogo.innerHTML = html;
+}
+
+function mostrarDetalheProduto() {
+    const detalhe = document.getElementById("detalhe-produto");
+    const mensagem = document.getElementById("mensagem-produto");
+
+    if (!detalhe || !mensagem) {
+        return;
+    }
+
+    const parametros = new URLSearchParams(window.location.search);
+    const id = Number(parametros.get("id"));
+    const produto = produtos.find(function (item) {
+        return item.id === id;
+    });
+
+    if (!produto) {
+        mensagem.textContent = "Produto não encontrado. Volte ao catálogo para escolher outro item.";
+        return;
+    }
+
+    const categoria = categorias.find(function (item) {
+        return item.id === produto.categoria;
+    });
+
+    if (!categoria) {
+        mensagem.textContent = "A categoria deste produto não está cadastrada.";
+        return;
+    }
+
+    detalhe.innerHTML = `
+        <div class="detalhe-imagem-fundo">
+            <img class="detalhe-imagem" src="${produto.imagem}" alt="${produto.nome}">
+        </div>
+        <div class="detalhe-info">
+            <p class="texto-destaque">${categoria.nome}</p>
+            <h1>${produto.nome}</h1>
+            <p>${produto.descricao}</p>
+            <p class="produto-preco">${formatarPreco(produto.preco)}</p>
+            <button id="adicionar-carrinho" class="botao" type="button" data-id="${produto.id}">
+                Adicionar ao carrinho
+            </button>
+            <p id="mensagem-adicionar" class="mensagem-carrinho" role="status"></p>
+            <a class="botao" href="produtos.html">Voltar ao catálogo</a>
+        </div>
+    `;
+}
+
 function configurarMenu() {
     const botao = document.getElementById("botao-menu");
     const menu = document.getElementById("menu");
 
+    if (!botao || !menu) {
+        return;
+    }
+
     botao.addEventListener("click", function () {
-        menu.classList.toggle("aberto");
+        const menuAberto = menu.classList.toggle("aberto");
+        botao.setAttribute("aria-expanded", menuAberto);
+        botao.setAttribute("aria-label", menuAberto ? "Fechar menu" : "Abrir menu");
+    });
+
+    menu.addEventListener("click", function (evento) {
+        if (evento.target.closest("a")) {
+            menu.classList.remove("aberto");
+            botao.setAttribute("aria-expanded", "false");
+            botao.setAttribute("aria-label", "Abrir menu");
+        }
     });
 }
 
 mostrarProdutos();
-configurarMenu(); 
+mostrarCatalogo();
+mostrarDetalheProduto();
+configurarMenu();
