@@ -1,85 +1,188 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Decoração artesanal para deixar sua casa mais acolhedora.">
-    <title>l'albero di ciliegio | Decoração artesanal</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>l'albero di ciliegio | Bottega Botanica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="cabecalho">
-        <a href="index.html" class="logo"><span aria-hidden="true">🌸</span> l'albero di ciliegio</a>
 
-        <button id="botao-menu" class="botao-menu" type="button"
-                aria-label="Abrir menu" aria-controls="menu" aria-expanded="false">
-            ☰
-        </button>
+  <!-- Barra de avisos -->
+  <div class="topo">
+    <div class="container">
+      <span>Frete cortesia acima de R$ 250 · 10% OFF com cupom BEMVINDO10</span>
+      <span class="verde">Artesanato certificado Toscana &amp; Kyoto</span>
+    </div>
+  </div>
 
-        <nav id="menu" class="menu" aria-label="Navegação principal">
-            <a href="index.html" aria-current="page">Início</a>
-            <a href="produtos.html">Produtos</a>
-            <a href="#categorias">Categorias</a>
-            <a href="compra.html">Carrinho</a>
-            <a href="cadastro.html">Cadastro / Login</a>
-        </nav>
-    </header>
+  <!-- Cabeçalho com menu -->
+  <header class="cabecalho">
+    <div class="container">
+      <a href="index.html" class="logo">l'albero di ciliegio<small>Bottega Botanica</small></a>
+      <nav>
+        <ul class="menu">
+          <li><a href="index.html" class="ativo">Início</a></li>
+          <li><a href="pages/produtos.html">Catálogo</a></li>
+          <li><a href="#">Cerâmicas</a></li>
+          <li><a href="#">Velas &amp; Aromas</a></li>
+          <li><a href="#">Coleções</a></li>
+          <li><a href="#manifesto">Sobre Nós</a></li>
+        </ul>
+      </nav>
+      <div class="acoes">
+        <input type="search" placeholder="Buscar peças artesanais...">
+        <span>♡</span>
+        <a href="pages/carrinho.html" class="carrinho-icone">🛍<span id="contador">0</span></a>
+      </div>
+    </div>
+  </header>
 
-    <main>
-        <section class="hero">
-            <div class="hero-conteudo">
-                <p class="hero-etiqueta">Detalhes feitos com carinho</p>
-                <h1>Uma casa mais bonita, no seu próprio ritmo.</h1>
-                <p>Decoração artesanal inspirada na delicadeza das flores de cerejeira.</p>
-                <a href="produtos.html" class="botao">Conheça os produtos</a>
-            </div>
-            <div class="hero-ilustracao" aria-hidden="true">
-                <span>🌸</span>
-                <span>🏺</span>
-                <span>🌿</span>
-            </div>
-        </section>
+  <main class="container">
 
-        <section id="categorias" class="secao">
-            <div class="secao-cabecalho">
-                <p class="texto-destaque">Encontre seu detalhe favorito</p>
-                <h2>Categorias</h2>
-            </div>
-            <div class="grade grade-3">
-                <a href="produtos.html#vasos" class="categoria">
-                    <span class="categoria-icone" aria-hidden="true">🏺</span>
-                    <span class="categoria-titulo">Vasos</span>
-                    <span class="categoria-descricao">Formas e cores para suas flores.</span>
-                </a>
-                <a href="produtos.html#ceramicas" class="categoria">
-                    <span class="categoria-icone" aria-hidden="true">🍽️</span>
-                    <span class="categoria-titulo">Cerâmicas</span>
-                    <span class="categoria-descricao">Peças especiais para decorar e usar.</span>
-                </a>
-                <a href="produtos.html#velas" class="categoria">
-                    <span class="categoria-icone" aria-hidden="true">🕯️</span>
-                    <span class="categoria-titulo">Velas</span>
-                    <span class="categoria-descricao">Um toque acolhedor para cada ambiente.</span>
-                </a>
-            </div>
-        </section>
+  
+    <section class="hero">
+      <div>
+        <span class="selo">● PRIMAVERA · EDIÇÃO BOTÂNICA 2025</span>
+        <h1>Primavera Botânica &amp; <em>Design Artesanal</em></h1>
+        <p>Peças moldadas à mão e essências puras inspiradas no florescer sereno das cerejeiras toscanas e no refinamento contemplativo oriental. O elo entre o tempo da terra e a sua casa.</p>
+        <div class="botoes">
+          <a href="pages/produtos.html" class="btn btn-primario">Explorar Coleção →</a>
+          <a href="#manifesto" class="btn btn-secundario">Conhecer o Atelier</a>
+        </div>
+        <ul>
+          <li>● Argila Toscana Certificada</li>
+          <li>● Queima Ecológica 1.280°C</li>
+          <li>● Edições Numeradas</li>
+        </ul>
+      </div>
+      <div class="hero-card">
+        <div class="foto"><img src="img/hero.jpg" alt="Vaso Sakura Imperial com flores de cerejeira"></div>
+        <div class="info">
+          <div>
+            <small>PEÇA EM DESTAQUE</small>
+            <h3><a href="pages/produto.html?id=1">Vaso Sakura Imperial</a></h3>
+            <small>★ 4.9 (84 avaliações)</small>
+          </div>
+          <div class="preco-grande">R$ 540,00</div>
+        </div>
+      </div>
+    </section>
 
-        <section id="destaques" class="secao secao-destaques">
-            <div class="secao-cabecalho">
-                <p class="texto-destaque">Escolhas da nossa loja</p>
-                <h2>Produtos em destaque</h2>
-            </div>
-            <div id="lista-produtos" class="grade grade-4"></div>
-            <a href="produtos.html" class="link-mais-produtos">Ver todos os produtos <span aria-hidden="true">→</span></a>
-        </section>
-    </main>
+   
+    <section class="categorias">
+      <button class="ativo">Todos os Garimpos</button>
+      <button>Cerâmicas Esmaltadas</button>
+      <button>Velas &amp; Aromas Botânicos</button>
+      <button>Chás &amp; Infusões Florais</button>
+      <button>Decoração Wabi-Sabi</button>
+    </section>
 
-    <footer class="rodape">
-        <p><strong>l'albero di ciliegio</strong> | Decoração artesanal para sua casa.</p>
-        <p>Projeto escolar: compra e pagamento são apenas uma simulação.</p>
-    </footer>
+  
+    <div class="titulo-secao">
+      <div>
+        <small>Curadoria em edição limitada</small>
+        <h2>Destaques da Temporada</h2>
+      </div>
+      <a href="pages/produtos.html">Ver catálogo completo →</a>
+    </div>
 
-    <script src="js/produtos.js"></script>
-    <script src="js/script.js"></script>
+    <section class="produtos">
+      <article class="card">
+        <div class="foto"><img src="img/vaso.jpg" alt="Vaso de cerâmica Sakura"><span class="etiqueta">FLOR DE CEREJEIRA</span></div>
+        <div class="estoque"><span>● Em estoque</span><span>★ 4.9</span></div>
+        <h3><a href="pages/produto.html?id=2">Vaso de Cerâmica Sakura Artesanal</a></h3>
+        <p class="descricao">Cor Rosa Cerejeira, argila rústica vitrificada</p>
+        <div class="compra"><span class="preco">R$ 189,90</span><button class="btn btn-primario" data-comprar="2">Comprar</button></div>
+      </article>
+
+      <article class="card">
+        <div class="foto"><img src="img/difusor.jpg" alt="Difusor botânico"><span class="etiqueta">AROMA PURO</span></div>
+        <div class="estoque"><span>● Em estoque</span><span>★ 4.8</span></div>
+        <h3><a href="pages/produto.html?id=3">Difusor Botânico Flor de Cerejeira</a></h3>
+        <p class="descricao">250ml com varetas naturais de salgueiro</p>
+        <div class="compra"><span class="preco">R$ 145,00</span><button class="btn btn-primario" data-comprar="3">Comprar</button></div>
+      </article>
+
+      <article class="card">
+        <div class="foto"><img src="img/xicaras.jpg" alt="Conjunto de xícaras"><span class="etiqueta">EDIÇÃO LIMITADA</span></div>
+        <div class="estoque"><span>● Apenas 6 un.</span><span>★ 5.0</span></div>
+        <h3><a href="pages/produto.html?id=4">Conjunto Xícaras Porcelana Esmaltada</a></h3>
+        <p class="descricao">Por cima de pigmentos orgânicos e craquelê sutil</p>
+        <div class="compra"><span class="preco">R$ 210,00</span><button class="btn btn-primario" data-comprar="4">Comprar</button></div>
+      </article>
+
+      <article class="card">
+        <div class="foto"><img src="img/vela.jpg" alt="Vela aromática"><span class="etiqueta">100% VEGETAL</span></div>
+        <div class="estoque"><span>● Em estoque</span><span>★ 4.7</span></div>
+        <h3><a href="pages/produto.html?id=5">Vela Aromática Cera de Soja &amp; Sakura</a></h3>
+        <p class="descricao">Pavio de madeira natural, queima de 45h</p>
+        <div class="compra"><span class="preco">R$ 98,00</span><button class="btn btn-primario" data-comprar="5">Comprar</button></div>
+      </article>
+    </section>
+
+   
+    <section class="manifesto" id="manifesto">
+      <div class="foto"><img src="img/atelier.jpg" alt="Mestre oleiro trabalhando no torno"></div>
+      <div>
+        <small style="color:var(--vermelho)">MANIFESTO DE FEITURA</small>
+        <h2>O Equilíbrio Entre a Tradição Toscana e a Serenidade Nipônica</h2>
+        <p>Cada item da <strong>l'albero di ciliegio</strong> nasce da paciência. Não perseguimos simetria industrial fria; celebramos as sutis nuances da argila viva e a fragrância natural que evolui com as estações.</p>
+        <div class="numeros">
+          <div><strong>0%</strong>Poluentes Sintéticos</div>
+          <div><strong>72h</strong>Tempo de Cura Lenta</div>
+          <div><strong>Kintsugi</strong>Garantia Eterna</div>
+        </div>
+        <a href="#" style="font-weight:600;font-size:.85rem">Leia sobre nosso processo botânico ↗</a>
+      </div>
+    </section>
+
+    
+    <section class="vantagens">
+      <div><h3>Frete Cortesia Especial</h3>Envio prioritário para todo o Brasil em compras acima de R$ 250.</div>
+      <div><h3>Embalagem 100% Biodegradável</h3>Proteção delicada feita com celulose reciclada e pétalas secas.</div>
+      <div><h3>Garantia de Entrega Perfeita</h3>Peças frágeis asseguradas. Caso ocorra qualquer imprevisto, reenviamos.</div>
+    </section>
+
+   
+    <section class="avaliacoes">
+      <div>
+        <div class="nota">★★★★★ <strong>4.92</strong> / 5.0</div>
+        <strong>Excelência Reconhecida por Colecionadores</strong><br>
+        <small>Mais de 1.840 clientes encantados em todo o território nacional</small>
+      </div>
+      <blockquote>"O vaso Sakura superou qualquer expectativa. A textura da cerâmica é única."<br><small>Beatriz M. · São Paulo</small></blockquote>
+      <a href="#" class="btn btn-secundario">Ver Todas Avaliações</a>
+    </section>
+
+  </main>
+
+ 
+  <footer class="rodape">
+    <div class="container">
+      <div class="colunas">
+        <div>
+          <p class="logo" style="font-size:1.3rem;color:var(--texto)">l'albero di ciliegio</p>
+          <p>Curadoria refinada de cerâmicas feitas à mão, essências puras e peças de mesa inspiradas no encontro entre a Toscana e o espírito sereno de Kyoto.</p>
+          <form onsubmit="return false">
+            <input type="email" placeholder="Seu e-mail preferido">
+            <button class="btn btn-primario">Assinar</button>
+          </form>
+        </div>
+        <div><h4>Navegação</h4><ul><li>Catálogo Geral</li><li>Cerâmicas de Alta Temperatura</li><li>Velas Botânicas</li><li>O Manifesto Bottega</li></ul></div>
+        <div><h4>Apoio ao Cliente</h4><ul><li>Meu Carrinho</li><li>Rastrear Pedido</li><li>Trocas e Devoluções</li><li>Atendimento Concierge</li></ul></div>
+        <div><h4>Segurança &amp; Sustentabilidade</h4><ul><li>Ambiente Seguro SSL</li><li>Embalagens Biodegradáveis</li></ul></div>
+      </div>
+      <div class="copy">
+        <span>© 2025 l'albero di ciliegio Bottega Botanica. Todos os direitos reservados.</span>
+        <span>Pix Instantâneo · Cartão de Crédito · Boleto Bancário</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/produtos.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
