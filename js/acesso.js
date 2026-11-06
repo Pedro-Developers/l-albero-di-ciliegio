@@ -1,51 +1,32 @@
-const botaoMostrarLogin = document.getElementById("mostrar-login");
-const botaoMostrarCadastro = document.getElementById("mostrar-cadastro");
-const painelLogin = document.getElementById("painel-login");
-const painelCadastro = document.getElementById("painel-cadastro");
-const formularioLogin = document.getElementById("form-login");
-const formularioCadastro = document.getElementById("form-cadastro");
-const mensagemAcesso = document.getElementById("mensagem-acesso");
-
-function mostrarPainelAcesso(painel) {
-    const mostrarLogin = painel === "login";
-
-    painelLogin.hidden = !mostrarLogin;
-    painelCadastro.hidden = mostrarLogin;
-    botaoMostrarLogin.setAttribute("aria-pressed", mostrarLogin);
-    botaoMostrarCadastro.setAttribute("aria-pressed", !mostrarLogin);
-    mensagemAcesso.textContent = "";
+// Login e cadastro SIMULADOS: os usuários ficam só no localStorage deste navegador.
+function pegarUsuarios() {
+  return JSON.parse(localStorage.getItem('usuarios')) || [];
+}
+function mostrarErro(texto) {
+  document.getElementById('erro').textContent = texto;
+}
+function entrarNaConta(usuario) {
+  localStorage.setItem('usuarioLogado', JSON.stringify({ nome: usuario.nome, email: usuario.email }));
+  location.href = '../index.html';
 }
 
-function testarCadastro(evento) {
-    evento.preventDefault();
-
-    const senha = document.getElementById("senha-cadastro").value;
-    const confirmarSenha = document.getElementById("confirmar-senha").value;
-
-    if (senha !== confirmarSenha) {
-        mensagemAcesso.textContent = "As senhas fictícias não correspondem.";
-        return;
-    }
-
-    formularioCadastro.reset();
-    mensagemAcesso.textContent =
-        "Cadastro validado para demonstração. Nenhuma conta foi criada e nenhum dado foi salvo.";
+function cadastrar(e) {
+  e.preventDefault();
+  const f = e.target;
+  if (f.senha.value.length < 6) return mostrarErro('A senha precisa ter pelo menos 6 caracteres.');
+  if (f.senha.value !== f.confirmar.value) return mostrarErro('As senhas não conferem.');
+  const usuarios = pegarUsuarios();
+  if (usuarios.some(function (u) { return u.email === f.email.value; })) return mostrarErro('Este e-mail já está cadastrado.');
+  const novo = { nome: f.nome.value, email: f.email.value, senha: f.senha.value };
+  usuarios.push(novo);
+  localStorage.setItem('usuarios', JSON.stringify(usuarios));
+  entrarNaConta(novo);
 }
 
-function testarLogin(evento) {
-    evento.preventDefault();
-    formularioLogin.reset();
-    mensagemAcesso.textContent =
-        "Formulário validado para demonstração. Nenhum login real foi feito ou dado foi salvo.";
+function entrar(e) {
+  e.preventDefault();
+  const f = e.target;
+  const usuario = pegarUsuarios().find(function (u) { return u.email === f.email.value && u.senha === f.senha.value; });
+  if (!usuario) return mostrarErro('E-mail ou senha incorretos.');
+  entrarNaConta(usuario);
 }
-
-botaoMostrarLogin.addEventListener("click", function () {
-    mostrarPainelAcesso("login");
-});
-
-botaoMostrarCadastro.addEventListener("click", function () {
-    mostrarPainelAcesso("cadastro");
-});
-
-formularioLogin.addEventListener("submit", testarLogin);
-formularioCadastro.addEventListener("submit", testarCadastro);

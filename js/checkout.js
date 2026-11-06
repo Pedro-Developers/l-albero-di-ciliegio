@@ -1,134 +1,82 @@
-const formularioCheckout = document.getElementById("form-checkout");
-const layoutCheckout = document.getElementById("checkout-layout");
-const avisoCarrinhoVazio = document.getElementById("aviso-carrinho-vazio");
-const avisoProdutoIndisponivel = document.getElementById("aviso-produto-indisponivel");
-const resumoItensCheckout = document.getElementById("itens-resumo-checkout");
-const totalCheckout = document.getElementById("total-checkout");
-const camposCartao = document.getElementById("campos-cartao");
-const campoParcelas = document.getElementById("campo-parcelas");
-const seletorParcelas = document.getElementById("parcelas");
-const previaParcelas = document.getElementById("previa-parcelas");
-const confirmacaoPedido = document.getElementById("confirmacao-pedido");
-const botaoConfirmarPedido = document.getElementById("confirmar-pedido");
-
-function renderizarResumoCheckout() {
-    const carrinho = obterCarrinho();
-
-    if (carrinho.length === 0) {
-        layoutCheckout.hidden = true;
-        avisoCarrinhoVazio.hidden = false;
-        return;
-    }
-
-    const possuiProdutoIndisponivel = carrinho.some(function (item) {
-        return !produtos.some(function (produto) {
-            return produto.id === item.id;
-        });
-    });
-
-    if (possuiProdutoIndisponivel) {
-        layoutCheckout.hidden = true;
-        avisoProdutoIndisponivel.hidden = false;
-        return;
-    }
-
-    let html = "";
-
-    for (const item of carrinho) {
-        const produto = produtos.find(function (produtoLoja) {
-            return produtoLoja.id === item.id;
-        });
-
-        const subtotal = Math.round(produto.preco * 100) * item.quantidade;
-        html += `
-            <li>
-                <span>${produto.nome} × ${item.quantidade}</span>
-                <strong>${formatarPreco(subtotal / 100)}</strong>
-            </li>
-        `;
-    }
-
-    resumoItensCheckout.innerHTML = html;
-    totalCheckout.textContent = formatarPreco(calcularTotalEmCentavos(carrinho) / 100);
+// Mostra/esconde os campos conforme a forma de pagamento escolhida
+function mostrarCamposPagamento() {
+  const forma = document.querySelector('input[name="pagamento"]:checked').value;
+  const usaCartao = forma === 'debito' || forma === 'credito';
+  document.getElementById('campos-cartao').hidden = !usaCartao;
+  document.getElementById('campo-parcelas').hidden = forma !== 'credito';
+  document.getElementById('caixa-pix').hidden = forma !== 'pix';
+  document.getElementById('caixa-boleto').hidden = forma !== 'boleto';
+  // campos do cartão só são obrigatórios quando o cartão está escolhido
+  document.querySelectorAll('#campos-cartao input').forEach(function (campo) { campo.required = usaCartao; });
 }
 
-function atualizarPreviaParcelas() {
-    const pagamentoSelecionado = document.querySelector('input[name="pagamento"]:checked');
-
-    if (!pagamentoSelecionado || pagamentoSelecionado.value !== "credito") {
-        previaParcelas.textContent = "";
-        return;
-    }
-
-    const totalEmCentavos = calcularTotalEmCentavos(obterCarrinho());
-    const quantidade = Number(seletorParcelas.value);
-    const valorBase = Math.floor(totalEmCentavos / quantidade);
-    const centavosRestantes = totalEmCentavos % quantidade;
-
-    if (centavosRestantes === 0) {
-        previaParcelas.textContent =
-            quantidade + "x de " + formatarPreco(valorBase / 100) + " (simulação sem juros).";
-        return;
-    }
-
-    const ultimaParcela = valorBase + centavosRestantes;
-    previaParcelas.textContent =
-        (quantidade - 1) + " parcelas de " + formatarPreco(valorBase / 100) +
-        " e a última de " + formatarPreco(ultimaParcela / 100) + " (simulação sem juros).";
+// Valida o cartão, guarda o pedido e vai para a página de sucesso
+function finalizarPedido(total) {
+  const f = document.getElementById('formulario');
+  const forma = f.pagamento.value;
+  if (forma === 'debito' || forma === 'credito') {
+    if (!/^\d{16}$/.test(f.numero.value.replace(/\s/g, ''))) return alert('O número fictício precisa ter 16 dígitos.');
+    if (!/^\d{3}$/.test(f.cvv.value)) return alert('O CVV fictício precisa ter 3 dígitos.');
+  }
+  const pedido = {
+    numero: Math.floor(100000 + Math.random() * 900000),
+    nome: f.nome.value,
+    total: total,
+    pagamento: forma,
+    parcelas: forma === 'credito' ? Number(f.parcelas.value) : 1
+  };
+  localStorage.setItem('pedido', JSON.stringify(pedido));
+  localStorage.removeItem('carrinho'); // esvazia o carrinho
+  localStorage.removeItem('cupom');
+  location.href = 'sucesso.html';
 }
 
-function atualizarFormaPagamento() {
-    const pagamentoSelecionado = document.querySelector('input[name="pagamento"]:checked');
-    const usaCartao = pagamentoSelecionado.value === "debito" ||
-        pagamentoSelecionado.value === "credito";
-    const usaParcelas = pagamentoSelecionado.value === "credito";
+function iniciarCheckout() {
+  const itens = pegarCarrinho();
+  if (itens.length === 0) { location.href = 'carrinho.html'; return; }
+  const subtotal = totalCarrinho();
+  const frete = calcularFrete(subtotal);
+  const desconto = pegarDesconto(subtotal);
+  const total = subtotal - desconto + frete;
 
-    camposCartao.hidden = !usaCartao;
-    campoParcelas.hidden = !usaParcelas;
+  let resumo = '<h3>Resumo do pedido</h3>';
+  itens.forEach(function (i) {
+    const p = buscarProduto(i.id);
+    resumo += `<p>${i.qtd}x ${p.nome} <span>${formatarPreco(p.preco * i.qtd)}</span></p>`;
+  });
+  if (desconto > 0) resumo += `<p>Cupom BEMVINDO10 <span>−${formatarPreco(desconto)}</span></p>`;
+  resumo += `<p>Frete <span>${frete === 0 ? 'Grátis' : formatarPreco(frete)}</span></p><p class="total">Total <span>${formatarPreco(total)}</span></p>`;
+  document.getElementById('resumo').innerHTML = resumo;
 
-    for (const campo of camposCartao.querySelectorAll("input")) {
-        campo.required = usaCartao;
-    }
+  // Parcelamento de 1x a 6x sem juros
+  let opcoes = '';
+  for (let n = 1; n <= 6; n++) {
+    opcoes += `<option value="${n}">${n}x de ${formatarPreco(Math.round(total / n))} sem juros</option>`;
+  }
+  document.getElementById('parcelas').innerHTML = opcoes;
 
-    seletorParcelas.required = usaParcelas;
-    atualizarPreviaParcelas();
+  document.querySelectorAll('input[name="pagamento"]').forEach(function (r) {
+    r.addEventListener('change', mostrarCamposPagamento);
+  });
+  mostrarCamposPagamento();
+  document.getElementById('formulario').addEventListener('submit', function (e) {
+    e.preventDefault(); // não recarrega a página
+    finalizarPedido(total);
+  });
 }
 
-function finalizarPedido() {
-    if (!formularioCheckout.reportValidity()) {
-        return;
-    }
-
-    const pagamentoSelecionado = document.querySelector('input[name="pagamento"]:checked');
-    const nomesPagamento = {
-        pix: "PIX",
-        debito: "cartão de débito",
-        credito: "cartão de crédito"
-    };
-    const formaPagamento = nomesPagamento[pagamentoSelecionado.value];
-
-    sessionStorage.removeItem(chaveCarrinho);
-    formularioCheckout.reset();
-    layoutCheckout.hidden = true;
-    confirmacaoPedido.hidden = false;
-    confirmacaoPedido.innerHTML = `
-        <p class="texto-destaque">Pedido concluído</p>
-        <h2>Compra simulada com sucesso!</h2>
-        <p>Forma escolhida: ${formaPagamento}. Nenhum pagamento real foi realizado.</p>
-        <p>Os dados preenchidos não foram enviados nem armazenados.</p>
-        <a class="botao" href="index.html">Voltar à loja</a>
-    `;
+function mostrarSucesso() {
+  const pedido = JSON.parse(localStorage.getItem('pedido'));
+  const caixa = document.getElementById('sucesso');
+  if (!pedido) { caixa.innerHTML = '<p>Nenhum pedido encontrado.</p>'; return; }
+  const nomes = { pix: 'PIX', boleto: 'Boleto bancário', debito: 'Cartão de débito', credito: 'Cartão de crédito' };
+  let forma = nomes[pedido.pagamento];
+  if (pedido.pagamento === 'credito') forma += ' em ' + pedido.parcelas + 'x sem juros';
+  caixa.innerHTML = `<h1>🍒 Pedido confirmado!</h1><p>Obrigado, ${pedido.nome}!</p>
+    <p>Pedido nº <strong>${pedido.numero}</strong></p><p>Pagamento: ${forma}</p>
+    <p>Total: <strong>${formatarPreco(pedido.total)}</strong></p>
+    <p>Código de rastreio: <strong>BR-${pedido.numero}-LC</strong></p>
+    <ol class="linha-tempo"><li class="feito">Pedido recebido</li><li class="feito">Pagamento aprovado</li><li>Separação &amp; embalagem Furoshiki</li><li>Entrega em 2 a 5 dias úteis</li></ol>
+    <p class="simulacao">Simulação escolar: nenhum pagamento real foi feito.</p>
+    <a class="btn btn-primario" href="../index.html">Voltar à loja</a>`;
 }
-
-for (const opcao of document.querySelectorAll('input[name="pagamento"]')) {
-    opcao.addEventListener("change", atualizarFormaPagamento);
-}
-
-seletorParcelas.addEventListener("change", atualizarPreviaParcelas);
-formularioCheckout.addEventListener("submit", function (evento) {
-    evento.preventDefault();
-});
-botaoConfirmarPedido.addEventListener("click", finalizarPedido);
-
-renderizarResumoCheckout();
-atualizarFormaPagamento();

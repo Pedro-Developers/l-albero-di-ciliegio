@@ -1,153 +1,100 @@
-function formatarPreco(valor) {
-    return valor.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
+// Funções usadas em todas as páginas.
+// "raiz" ajusta os caminhos: páginas dentro de /pages/ precisam voltar uma pasta ("../")
+const raiz = location.pathname.includes('/pages/') ? '../' : '';
+
+// Recebe centavos (18990) e devolve texto "R$ 189,90"
+function formatarPreco(centavos) {
+  return 'R$ ' + (centavos / 100).toFixed(2).replace('.', ',');
 }
 
-function criarCardProduto(produto) {
-    return `
-        <article class="produto">
-            <img class="produto-imagem" src="${produto.imagem}" alt="${produto.nome}" loading="lazy">
-            <div class="produto-info">
-                <h3>${produto.nome}</h3>
-                <p>${produto.descricao}</p>
-                <span class="produto-preco">${formatarPreco(produto.preco)}</span>
-                <a class="botao botao-detalhes" href="produto.html?id=${produto.id}">Ver detalhes</a>
-            </div>
-        </article>
-    `;
+// ----- Carrinho salvo no localStorage (guarda texto no navegador, mesmo ao trocar de página) -----
+// O carrinho é uma lista de { id, qtd }. JSON.stringify vira texto; JSON.parse volta a ser lista.
+function pegarCarrinho() {
+  return JSON.parse(localStorage.getItem('carrinho')) || [];
+}
+function salvarCarrinho(carrinho) {
+  localStorage.setItem('carrinho', JSON.stringify(carrinho));
+  atualizarContador();
+}
+function adicionarAoCarrinho(id, quantidade) {
+  quantidade = quantidade || 1;
+  const carrinho = pegarCarrinho();
+  const item = carrinho.find(function (i) { return i.id === id; });
+  if (item) { item.qtd += quantidade; } else { carrinho.push({ id: id, qtd: quantidade }); }
+  salvarCarrinho(carrinho);
+  mostrarAviso('Produto adicionado ao carrinho!');
+}
+// Soma preço x quantidade de todos os itens (em centavos)
+function totalCarrinho() {
+  return pegarCarrinho().reduce(function (soma, i) {
+    return soma + buscarProduto(i.id).preco * i.qtd;
+  }, 0);
+}
+// Frete grátis a partir de R$ 250,00 (25000 centavos); abaixo disso, R$ 19,90
+function calcularFrete(subtotal) {
+  return subtotal >= 25000 ? 0 : 1990;
 }
 
-const categorias = [
-    { id: "vasos", nome: "Vasos" },
-    { id: "ceramicas", nome: "Cerâmicas" },
-    { id: "velas", nome: "Velas" }
-];
-
-function mostrarProdutos() {
-    const lista = document.getElementById("lista-produtos");
-
-    if (!lista) {
-        return;
-    }
-
-    let html = "";
-
-    for (const produto of produtos) {
-        html += criarCardProduto(produto);
-    }
-
-    lista.innerHTML = html;
+// Cupom BEMVINDO10 = 10% de desconto sobre o subtotal
+function aplicarCupom(codigo) {
+  if (codigo.trim().toUpperCase() === 'BEMVINDO10') { localStorage.setItem('cupom', 'BEMVINDO10'); return true; }
+  return false;
+}
+function pegarDesconto(subtotal) {
+  return localStorage.getItem('cupom') === 'BEMVINDO10' ? Math.round(subtotal * 0.10) : 0;
 }
 
-function mostrarCatalogo() {
-    const catalogo = document.getElementById("lista-catalogo");
+// ----- Tema claro/escuro: troca o atributo data-tema do <html>; o CSS faz o resto -----
+function alternarTema() {
+  const novo = document.documentElement.dataset.tema === 'escuro' ? 'claro' : 'escuro';
+  document.documentElement.dataset.tema = novo;
+  localStorage.setItem('tema', novo);
+}
+document.documentElement.dataset.tema = localStorage.getItem('tema') || 'claro';
 
-    if (!catalogo) {
-        return;
-    }
-
-    let html = "";
-
-    for (const categoria of categorias) {
-        const produtosDaCategoria = produtos.filter(function (produto) {
-            return produto.categoria === categoria.id;
-        });
-
-        if (produtosDaCategoria.length === 0) {
-            continue;
-        }
-
-        html += `
-            <section class="catalogo-categoria" id="${categoria.id}">
-                <h2>${categoria.nome}</h2>
-                <div class="grade grade-4">
-        `;
-
-        for (const produto of produtosDaCategoria) {
-            html += criarCardProduto(produto);
-        }
-
-        html += `
-                </div>
-            </section>
-        `;
-    }
-
-    catalogo.innerHTML = html;
+// Se há usuário logado, o link "Entrar" vira "Sair"
+function mostrarConta() {
+  const link = document.getElementById('conta');
+  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+  if (!link || !usuario) return;
+  link.textContent = 'Sair (' + usuario.nome.split(' ')[0] + ')';
+  link.href = '#';
+  link.onclick = function (e) { e.preventDefault(); localStorage.removeItem('usuarioLogado'); location.reload(); };
 }
 
-function mostrarDetalheProduto() {
-    const detalhe = document.getElementById("detalhe-produto");
-    const mensagem = document.getElementById("mensagem-produto");
-
-    if (!detalhe || !mensagem) {
-        return;
-    }
-
-    const parametros = new URLSearchParams(window.location.search);
-    const id = Number(parametros.get("id"));
-    const produto = produtos.find(function (item) {
-        return item.id === id;
-    });
-
-    if (!produto) {
-        mensagem.textContent = "Produto não encontrado. Volte ao catálogo para escolher outro item.";
-        return;
-    }
-
-    const categoria = categorias.find(function (item) {
-        return item.id === produto.categoria;
-    });
-
-    if (!categoria) {
-        mensagem.textContent = "A categoria deste produto não está cadastrada.";
-        return;
-    }
-
-    detalhe.innerHTML = `
-        <div class="detalhe-imagem-fundo">
-            <img class="detalhe-imagem" src="${produto.imagem}" alt="${produto.nome}">
-        </div>
-        <div class="detalhe-info">
-            <p class="texto-destaque">${categoria.nome}</p>
-            <h1>${produto.nome}</h1>
-            <p>${produto.descricao}</p>
-            <p class="produto-preco">${formatarPreco(produto.preco)}</p>
-            <button id="adicionar-carrinho" class="botao" type="button" data-id="${produto.id}">
-                Adicionar ao carrinho
-            </button>
-            <p id="mensagem-adicionar" class="mensagem-carrinho" role="status"></p>
-            <a class="botao" href="produtos.html">Voltar ao catálogo</a>
-        </div>
-    `;
+// ----- Interface comum -----
+function atualizarContador() {
+  const total = pegarCarrinho().reduce(function (s, i) { return s + i.qtd; }, 0);
+  const marcador = document.getElementById('contador');
+  if (marcador) marcador.textContent = total;
+}
+function mostrarAviso(texto) {
+  const aviso = document.createElement('div');
+  aviso.className = 'aviso';
+  aviso.textContent = texto;
+  document.body.appendChild(aviso);
+  setTimeout(function () { aviso.remove(); }, 2000);
+}
+// Páginas internas não repetem cabeçalho/rodapé no HTML: o JS desenha os dois
+function montarCabecalhoRodape() {
+  if (!document.querySelector('.cabecalho')) {
+    document.body.insertAdjacentHTML('afterbegin', `<header class="cabecalho"><div class="container">
+      <a href="${raiz}index.html" class="logo">l'albero di ciliegio<small>Bottega Botanica</small></a>
+      <nav><ul class="menu"><li><a href="${raiz}index.html">Início</a></li><li><a href="${raiz}pages/produtos.html">Catálogo</a></li><li><a href="${raiz}pages/carrinho.html">Carrinho</a></li></ul></nav>
+      <div class="acoes"><button class="icone" onclick="alternarTema()" title="Tema claro/escuro">🌓</button><a href="${raiz}pages/login.html" id="conta">Entrar</a>
+      <a href="${raiz}pages/carrinho.html" class="carrinho-icone">🛍<span id="contador">0</span></a></div></div></header>`);
+  }
+  if (!document.querySelector('.rodape')) {
+    document.body.insertAdjacentHTML('beforeend', `<footer class="rodape"><div class="container copy"><span>© 2025 l'albero di ciliegio · Projeto escolar</span><span>Pix · Cartão de Crédito · Cartão de Débito (simulação)</span></div></footer>`);
+  }
 }
 
-function configurarMenu() {
-    const botao = document.getElementById("botao-menu");
-    const menu = document.getElementById("menu");
+// Qualquer botão com data-comprar="ID" adiciona aquele produto ao carrinho
+document.addEventListener('click', function (e) {
+  const botao = e.target.closest('[data-comprar]');
+  if (botao) adicionarAoCarrinho(Number(botao.dataset.comprar));
+});
 
-    if (!botao || !menu) {
-        return;
-    }
-
-    botao.addEventListener("click", function () {
-        const menuAberto = menu.classList.toggle("aberto");
-        botao.setAttribute("aria-expanded", menuAberto);
-        botao.setAttribute("aria-label", menuAberto ? "Fechar menu" : "Abrir menu");
-    });
-
-    menu.addEventListener("click", function (evento) {
-        if (evento.target.closest("a")) {
-            menu.classList.remove("aberto");
-            botao.setAttribute("aria-expanded", "false");
-            botao.setAttribute("aria-label", "Abrir menu");
-        }
-    });
-}
-
-mostrarProdutos();
-mostrarCatalogo();
-mostrarDetalheProduto();
-configurarMenu();
+montarCabecalhoRodape();
+atualizarContador();
+mostrarConta();
