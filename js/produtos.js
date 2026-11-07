@@ -15,9 +15,9 @@ function buscarProduto(id) {
 // Recebe um produto e devolve o HTML do card
 function cardProduto(p) {
   return `<article class="card">
-    <a class="foto" href="${raiz}pages/produto.html?id=${p.id}"><img src="${raiz}${p.img}" alt="${p.nome}"><span class="etiqueta">${p.etiqueta}</span></a>
+    <a class="foto" href="${raiz}produto.html?id=${p.id}"><img src="${raiz}${p.img}" alt="${p.nome}"><span class="etiqueta">${p.etiqueta}</span></a>
     <small class="estoque"><span>${p.categoria}</span></small>
-    <h3><a href="${raiz}pages/produto.html?id=${p.id}">${p.nome}</a></h3>
+    <h3><a href="${raiz}produto.html?id=${p.id}">${p.nome}</a></h3>
     <p class="descricao">${p.descricao}</p>
     <div class="compra"><span class="preco">${formatarPreco(p.preco)}</span><button class="btn btn-primario" data-comprar="${p.id}">Comprar</button></div>
   </article>`;

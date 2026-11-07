@@ -33,7 +33,7 @@ function finalizarPedido(total) {
 
 function iniciarCheckout() {
   const itens = pegarCarrinho();
-  if (itens.length === 0) { location.href = 'carrinho.html'; return; }
+  if (itens.length === 0) { location.href = 'compra.html'; return; }
   const subtotal = totalCarrinho();
   const frete = calcularFrete(subtotal);
   const desconto = pegarDesconto(subtotal);
@@ -78,5 +78,5 @@ function mostrarSucesso() {
     <p>Código de rastreio: <strong>BR-${pedido.numero}-LC</strong></p>
     <ol class="linha-tempo"><li class="feito">Pedido recebido</li><li class="feito">Pagamento aprovado</li><li>Separação &amp; embalagem Furoshiki</li><li>Entrega em 2 a 5 dias úteis</li></ol>
     <p class="simulacao">Simulação escolar: nenhum pagamento real foi feito.</p>
-    <a class="btn btn-primario" href="../index.html">Voltar à loja</a>`;
+    <a class="btn btn-primario" href="index.html">Voltar à loja</a>`;
 }

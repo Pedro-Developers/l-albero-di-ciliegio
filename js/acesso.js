@@ -7,7 +7,39 @@ function mostrarErro(texto) {
 }
 function entrarNaConta(usuario) {
   localStorage.setItem('usuarioLogado', JSON.stringify({ nome: usuario.nome, email: usuario.email }));
-  location.href = '../index.html';
+  location.href = 'index.html';
+}
+
+function mostrarConta() {
+  const link = document.getElementById('conta');
+  if (!link) return;
+
+  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+  if (!usuario) {
+    link.textContent = 'Entrar';
+    link.href = 'login.html';
+    link.onclick = null;
+    return;
+  }
+
+  link.textContent = 'Sair (' + usuario.nome.split(' ')[0] + ')';
+  link.href = '#';
+  link.onclick = function (e) {
+    e.preventDefault();
+    localStorage.removeItem('usuarioLogado');
+    location.reload();
+  };
+}
+
+function preencherDadosDaConta() {
+  const formulario = document.getElementById('formulario');
+  if (!formulario) return;
+
+  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+  if (!usuario) return;
+
+  formulario.nome.value = formulario.nome.value || usuario.nome;
+  formulario.email.value = formulario.email.value || usuario.email;
 }
 
 function cadastrar(e) {
@@ -30,3 +62,6 @@ function entrar(e) {
   if (!usuario) return mostrarErro('E-mail ou senha incorretos.');
   entrarNaConta(usuario);
 }
+
+mostrarConta();
+preencherDadosDaConta();
