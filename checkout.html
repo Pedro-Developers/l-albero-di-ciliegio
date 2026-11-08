@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | l'albero di ciliegio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container pagina">
+    <h1>Finalizar compra</h1>
+    <p class="simulacao">⚠ SIMULAÇÃO: não digite dados bancários reais. Nada é enviado ou cobrado.</p>
+    <div class="layout-checkout">
+      <form id="formulario">
+        <h3>Seus dados</h3>
+        <div class="campos">
+          <input name="nome" placeholder="Nome completo" required>
+          <input name="email" type="email" placeholder="E-mail" required>
+          <input name="telefone" placeholder="Telefone" required>
+          <input name="cep" placeholder="CEP" required>
+          <input name="cidade" placeholder="Cidade" required>
+          <input name="estado" placeholder="Estado (UF)" maxlength="2" required>
+          <input name="endereco" placeholder="Endereço" class="larga" required>
+        </div>
+        <h3>Forma de pagamento</h3>
+        <div class="formas">
+          <label><input type="radio" name="pagamento" value="pix" checked> PIX</label>
+          <label><input type="radio" name="pagamento" value="boleto"> Boleto</label>
+          <label><input type="radio" name="pagamento" value="debito"> Cartão de débito</label>
+          <label><input type="radio" name="pagamento" value="credito"> Cartão de crédito</label>
+        </div>
+        <div id="caixa-pix" class="caixa-pix">📱 QR Code PIX (simulado)<br><small>Código: 00020126-FICTICIO-ALBERO</small></div>
+        <div id="caixa-boleto" class="caixa-pix">🧾 Boleto simulado<br><small>Vencimento em 3 dias úteis. Nenhum boleto real é gerado.</small></div>
+        <div id="campos-cartao" class="campos">
+          <input name="numero" placeholder="Número fictício (16 dígitos)" maxlength="19">
+          <input name="titular" placeholder="Nome do titular">
+          <input name="validade" placeholder="Validade (MM/AA)" maxlength="5">
+          <input name="cvv" placeholder="CVV fictício (3 dígitos)" maxlength="3">
+        </div>
+        <div id="campo-parcelas"><label>Parcelamento<br><select id="parcelas" name="parcelas"></select></label></div>
+        <br><button class="btn btn-primario" type="submit">Confirmar pedido (simulação)</button>
+      </form>
+      <aside id="resumo" class="resumo"></aside>
+    </div>
+  </main>
+  <script src="js/produtos.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/checkout.js"></script>
+  <script>iniciarCheckout();</script>
+  <script src="js/acesso.js"></script>
+</body>
+</html>
