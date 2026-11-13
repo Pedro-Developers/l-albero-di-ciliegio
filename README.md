@@ -20,7 +20,7 @@ A loja possui identidade visual própria, inspirada em uma estética delicada e 
 - Remoção de produtos do carrinho;
 - Cálculo do valor total da compra;
 - Formulário de finalização do pedido;
-- Cadastro e login demonstrativos, com sessão compartilhada entre as páginas no mesmo navegador;
+
 - Seleção da forma de pagamento;
 - Simulação de pagamento por:
   - 💳 Cartão de crédito;
