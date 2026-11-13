@@ -1,4 +1,3 @@
-/* ===== Variáveis: cores e fontes da identidade visual ===== */
 :root {
   --vermelho: #c8102e;
   --fundo: #fbf7f6;
@@ -17,18 +16,38 @@
      padding: 0; 
     }
     @media (max-width: 900px) {
-  .header { flex-direction: column; align-items: flex-start; gap: 12px; }
-    .produtos { grid-template-columns: repeat(2, 1fr); }
-  .hero, .manifesto { grid-template-columns: 1fr; }
-  .rodape .colunas { grid-template-columns: 1fr 1fr; }
+  .header { 
+    flex-direction: column;
+     align-items: flex-start; 
+     gap: 12px; 
+    }
+    .produtos {
+         grid-template-columns: repeat(2, 1fr); 
+        }
+  .hero, .manifesto { 
+    grid-template-columns: 1fr;
+ }
+  .rodape .colunas { 
+    grid-template-columns: 1fr 1fr;
+ }
 }
 
     @media (max-width: 600px) {
-  .hero h1 { font-size: 2rem; }
-  .produtos, .vantagens { grid-template-columns: 1fr; }
-  .acoes input { width: 140px; }
-  .rodape .colunas { grid-template-columns: 1fr; }
-  .numeros { grid-template-columns: 1fr; }
+  .hero h1 { 
+    font-size: 2rem; 
+}
+  .produtos, .vantagens {
+     grid-template-columns: 1fr; 
+    }
+  .acoes input { 
+    width: 140px;
+ }
+  .rodape .colunas {
+     grid-template-columns: 1fr; 
+    }
+  .numeros {
+     grid-template-columns: 1fr; 
+    }
 }
 
     @media (max-width: 900px) {
