@@ -15,78 +15,54 @@
      margin: 0; 
      padding: 0; 
     }
-    @media (max-width: 900px) {
-  .header { 
-    flex-direction: column;
-     align-items: flex-start; 
-     gap: 12px; 
+@media (max-width: 900px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
     }
+
     .produtos {
-         grid-template-columns: repeat(2, 1fr); 
-        }
-  .hero, .manifesto { 
-    grid-template-columns: 1fr;
- }
-  .rodape .colunas { 
-    grid-template-columns: 1fr 1fr;
- }
-}
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
-    @media (max-width: 600px) {
-  .hero h1 { 
-    font-size: 2rem; 
-}
-  .produtos, .vantagens {
-     grid-template-columns: 1fr; 
+    .hero,
+    .manifesto {
+        grid-template-columns: 1fr;
     }
-  .acoes input { 
-    width: 140px;
- }
-  .rodape .colunas {
-     grid-template-columns: 1fr; 
-    }
-  .numeros {
-     grid-template-columns: 1fr; 
+
+    .rodape .colunas {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-    @media (max-width: 900px) {
-  .produtos { 
-    grid-template-columns: repeat(2, 1fr);
- }
-  .hero, .manifesto { 
-    grid-template-columns: 1fr;
- }
-  .rodape .colunas { 
-    grid-template-columns: 1fr 1fr;
- }
-}
-
-    @media (max-width: 600px) {
-  .hero h1 { 
-    font-size: 2rem;
- }
-  .produtos, .vantagens { 
-    grid-template-columns: 1fr;
- }
-  .acoes input {
-     width: 140px; 
+@media (max-width: 700px) {
+    .detalhe,
+    .layout-checkout,
+    .campos {
+        grid-template-columns: 1fr;
     }
-  .rodape .colunas {
-     grid-template-columns: 1fr;
-     }
-  .numeros { 
-    grid-template-columns: 1fr;
- }
+
+    .linha-carrinho {
+        grid-template-columns: 60px minmax(0, 1fr) auto;
+    }
 }
 
-    @media (max-width: 700px) {
-  .detalhe, .layout-checkout, .campos { 
-    grid-template-columns: 1fr;
- }
-  .linha-carrinho { 
-    grid-template-columns: 60px 1fr auto;
- }
+@media (max-width: 600px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .produtos,
+    .vantagens,
+    .rodape .colunas,
+    .numeros {
+        grid-template-columns: 1fr;
+    }
+
+    .acoes input {
+        width: min(140px, 100%);
+    }
 }
 
 body {
