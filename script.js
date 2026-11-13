@@ -1,14 +1,8 @@
-// Funções usadas em todas as páginas.
-// "raiz" ajusta os caminhos: caminho base dos links e imagens
-const raiz = ''; // todas as páginas ficam na mesma pasta, então não precisa voltar pastas
-
-// Recebe centavos (18990) e devolve texto "R$ 189,90"
+const raiz = ''; 
 function formatarPreco(centavos) {
   return 'R$ ' + (centavos / 100).toFixed(2).replace('.', ',');
 }
 
-// ----- Carrinho salvo no localStorage (guarda texto no navegador, mesmo ao trocar de página) -----
-// O carrinho é uma lista de { id, qtd }. JSON.stringify vira texto; JSON.parse volta a ser lista.
 function pegarCarrinho() {
   return JSON.parse(localStorage.getItem('carrinho')) || [];
 }
@@ -24,18 +18,15 @@ function adicionarAoCarrinho(id, quantidade) {
   salvarCarrinho(carrinho);
   mostrarAviso('Produto adicionado ao carrinho!');
 }
-// Soma preço x quantidade de todos os itens (em centavos)
 function totalCarrinho() {
   return pegarCarrinho().reduce(function (soma, i) {
     return soma + buscarProduto(i.id).preco * i.qtd;
   }, 0);
 }
-// Frete grátis a partir de R$ 250,00 (25000 centavos); abaixo disso, R$ 19,90
 function calcularFrete(subtotal) {
   return subtotal >= 25000 ? 0 : 1990;
 }
 
-// Cupom BEMVINDO10 = 10% de desconto sobre o subtotal
 function aplicarCupom(codigo) {
   if (codigo.trim().toUpperCase() === 'BEMVINDO10') { localStorage.setItem('cupom', 'BEMVINDO10'); return true; }
   return false;
@@ -44,7 +35,6 @@ function pegarDesconto(subtotal) {
   return localStorage.getItem('cupom') === 'BEMVINDO10' ? Math.round(subtotal * 0.10) : 0;
 }
 
-// ----- Tema claro/escuro: troca o atributo data-tema do <html>; o CSS faz o resto -----
 function alternarTema() {
   const novo = document.documentElement.dataset.tema === 'escuro' ? 'claro' : 'escuro';
   document.documentElement.dataset.tema = novo;
@@ -52,7 +42,6 @@ function alternarTema() {
 }
 document.documentElement.dataset.tema = localStorage.getItem('tema') || 'claro';
 
-// Se há usuário logado, o link "Entrar" vira "Sair"
 function mostrarConta() {
   const link = document.getElementById('conta');
   const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
@@ -62,7 +51,6 @@ function mostrarConta() {
   link.onclick = function (e) { e.preventDefault(); localStorage.removeItem('usuarioLogado'); location.reload(); };
 }
 
-// ----- Interface comum -----
 function atualizarContador() {
   const total = pegarCarrinho().reduce(function (s, i) { return s + i.qtd; }, 0);
   const marcador = document.getElementById('contador');
@@ -75,7 +63,6 @@ function mostrarAviso(texto) {
   document.body.appendChild(aviso);
   setTimeout(function () { aviso.remove(); }, 2000);
 }
-// Páginas internas não repetem cabeçalho/rodapé no HTML: o JS desenha os dois
 function montarCabecalhoRodape() {
   if (!document.querySelector('.cabecalho')) {
     document.body.insertAdjacentHTML('afterbegin', `<header class="cabecalho"><div class="container">
@@ -88,8 +75,6 @@ function montarCabecalhoRodape() {
     document.body.insertAdjacentHTML('beforeend', `<footer class="rodape"><div class="container copy"><span>© 2025 l'albero di ciliegio · Projeto escolar</span><span>Pix · Cartão de Crédito · Cartão de Débito (simulação)</span></div></footer>`);
   }
 }
-
-// Qualquer botão com data-comprar="ID" adiciona aquele produto ao carrinho
 document.addEventListener('click', function (e) {
   const botao = e.target.closest('[data-comprar]');
   if (botao) adicionarAoCarrinho(Number(botao.dataset.comprar));

@@ -1,4 +1,3 @@
-// Mostra/esconde os campos conforme a forma de pagamento escolhida
 function mostrarCamposPagamento() {
   const forma = document.querySelector('input[name="pagamento"]:checked').value;
   const usaCartao = forma === 'debito' || forma === 'credito';
@@ -6,11 +5,9 @@ function mostrarCamposPagamento() {
   document.getElementById('campo-parcelas').hidden = forma !== 'credito';
   document.getElementById('caixa-pix').hidden = forma !== 'pix';
   document.getElementById('caixa-boleto').hidden = forma !== 'boleto';
-  // campos do cartão só são obrigatórios quando o cartão está escolhido
   document.querySelectorAll('#campos-cartao input').forEach(function (campo) { campo.required = usaCartao; });
 }
 
-// Valida o cartão, guarda o pedido e vai para a página de sucesso
 function finalizarPedido(total) {
   const f = document.getElementById('formulario');
   const forma = f.pagamento.value;
@@ -26,7 +23,7 @@ function finalizarPedido(total) {
     parcelas: forma === 'credito' ? Number(f.parcelas.value) : 1
   };
   localStorage.setItem('pedido', JSON.stringify(pedido));
-  localStorage.removeItem('carrinho'); // esvazia o carrinho
+  localStorage.removeItem('carrinho'); 
   localStorage.removeItem('cupom');
   location.href = 'sucesso.html';
 }
@@ -48,7 +45,7 @@ function iniciarCheckout() {
   resumo += `<p>Frete <span>${frete === 0 ? 'Grátis' : formatarPreco(frete)}</span></p><p class="total">Total <span>${formatarPreco(total)}</span></p>`;
   document.getElementById('resumo').innerHTML = resumo;
 
-  // Parcelamento de 1x a 6x sem juros
+  
   let opcoes = '';
   for (let n = 1; n <= 6; n++) {
     opcoes += `<option value="${n}">${n}x de ${formatarPreco(Math.round(total / n))} sem juros</option>`;
@@ -60,7 +57,7 @@ function iniciarCheckout() {
   });
   mostrarCamposPagamento();
   document.getElementById('formulario').addEventListener('submit', function (e) {
-    e.preventDefault(); // não recarrega a página
+    e.preventDefault(); 
     finalizarPedido(total);
   });
 }

@@ -1,4 +1,4 @@
-// Muda a quantidade de um produto (delta = +1 ou -1). Se chegar a 0, remove.
+
 function alterarQuantidade(id, delta) {
   let carrinho = pegarCarrinho();
   const item = carrinho.find(function (i) { return i.id === id; });
@@ -12,7 +12,7 @@ function removerProduto(id) {
   mostrarCarrinho();
 }
 
-// Desenha o carrinho na tela (chamada de novo sempre que algo muda)
+
 function mostrarCarrinho() {
   const caixa = document.getElementById('carrinho');
   const itens = pegarCarrinho();
@@ -51,7 +51,6 @@ function usarCupom() {
 
 function iniciarCarrinho() {
   mostrarCarrinho();
-  // Um único "ouvinte" para os botões +, − e ✕ (que são recriados a cada desenho)
   document.getElementById('carrinho').addEventListener('click', function (e) {
     const b = e.target.closest('button');
     if (!b) return;

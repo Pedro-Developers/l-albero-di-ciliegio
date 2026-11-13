@@ -1,4 +1,3 @@
-// Login e cadastro SIMULADOS: os usuários ficam só no localStorage deste navegador.
 function pegarUsuarios() {
   return JSON.parse(localStorage.getItem('usuarios')) || [];
 }

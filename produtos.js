@@ -1,4 +1,4 @@
-// Lista de produtos. Preço em CENTAVOS (18990 = R$ 189,90) para não ter erro de arredondamento.
+
 const produtos = [
   { id: 1, nome: 'Vaso Sakura Imperial', categoria: 'Cerâmicas', preco: 54000, img: 'img/hero.jpg', etiqueta: 'PEÇA EM DESTAQUE', descricao: 'Assinado à mão pelo mestre oleiro. Esmalte rosado com acabamento craquelê.' },
   { id: 2, nome: 'Vaso de Cerâmica Sakura Artesanal', categoria: 'Cerâmicas', preco: 18990, img: 'img/vaso.jpg', etiqueta: 'FLOR DE CEREJEIRA', descricao: 'Cor Rosa Cerejeira, argila rústica vitrificada.' },
@@ -7,12 +7,11 @@ const produtos = [
   { id: 5, nome: 'Vela Aromática Cera de Soja & Sakura', categoria: 'Velas & Aromas', preco: 9800, img: 'img/vela.jpg', etiqueta: '100% VEGETAL', descricao: 'Pavio de madeira natural, queima de 45h.' }
 ];
 
-// Recebe um id e devolve o produto correspondente
+
 function buscarProduto(id) {
   return produtos.find(function (p) { return p.id === id; });
 }
 
-// Recebe um produto e devolve o HTML do card
 function cardProduto(p) {
   return `<article class="card">
     <a class="foto" href="${raiz}produto.html?id=${p.id}"><img src="${raiz}${p.img}" alt="${p.nome}"><span class="etiqueta">${p.etiqueta}</span></a>
@@ -23,7 +22,6 @@ function cardProduto(p) {
   </article>`;
 }
 
-// Catálogo: filtra por busca, categoria e preço máximo, ordena e desenha os cards
 function mostrarCatalogo() {
   const busca = document.getElementById('busca').value.toLowerCase();
   const categoria = document.getElementById('categoria').value;
@@ -38,12 +36,10 @@ function mostrarCatalogo() {
   document.getElementById('lista').innerHTML = filtrados.map(cardProduto).join('') || '<p>Nenhum produto encontrado.</p>';
 }
 
-// Botão da página de detalhes: adiciona a quantidade escolhida
 function adicionarVarios(id) {
   adicionarAoCarrinho(id, Number(document.getElementById('qtd-detalhe').value) || 1);
 }
 
-// Detalhes: lê o ?id= da URL e mostra aquele produto
 function mostrarDetalhe() {
   const id = Number(new URLSearchParams(location.search).get('id'));
   const p = buscarProduto(id);
