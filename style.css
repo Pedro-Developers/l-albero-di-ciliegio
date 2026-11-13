@@ -15,26 +15,7 @@
      margin: 0; 
      padding: 0; 
     }
-@media (max-width: 900px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
 
-    .produtos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .hero,
-    .manifesto {
-        grid-template-columns: 1fr;
-    }
-
-    .rodape .colunas {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
 
 @media (max-width: 700px) {
     .detalhe,
@@ -65,6 +46,103 @@
     }
 }
 
+
+@media (max-width: 600px) {
+    .container {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .hero {
+        gap: 24px;
+        padding: 24px 0;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .produtos,
+    .vantagens,
+    .rodape .colunas,
+    .numeros {
+        grid-template-columns: 1fr;
+    }
+
+    .manifesto {
+        padding: 18px;
+    }
+
+    .titulo-secao {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .acoes input {
+        flex-basis: 100%;
+    }
+
+    .linha-carrinho {
+        grid-template-columns: 52px minmax(0, 1fr) auto;
+        gap: 8px;
+    }
+
+    .linha-carrinho > * {
+        min-width: 0;
+    }
+
+    .foto-detalhe {
+        height: clamp(240px, 60vw, 360px);
+    }
+
+    .auth .lado {
+        min-height: 140px;
+    }
+
+    .aviso {
+        right: 16px;
+        bottom: 16px;
+        left: 16px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+        padding: 24px 0;
+    }
+
+    .hero > * {
+        min-width: 0;
+    }
+
+    .hero-card {
+        width: 100%;
+    }
+
+    .produtos,
+    .vantagens,
+    .rodape .colunas,
+    .numeros,
+    .manifesto,
+    .detalhe,
+    .layout-checkout,
+    .campos,
+    .auth {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .container {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
 body {
      font-family: var(--fonte-texto);
       background: var(--fundo);
