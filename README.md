@@ -20,6 +20,7 @@ A loja possui identidade visual própria, inspirada em uma estética delicada e 
 - Remoção de produtos do carrinho;
 - Cálculo do valor total da compra;
 - Formulário de finalização do pedido;
+
 - Seleção da forma de pagamento;
 - Simulação de pagamento por:
   - 💳 Cartão de crédito;
@@ -40,20 +41,31 @@ A loja possui identidade visual própria, inspirada em uma estética delicada e 
 ## 📁 Estrutura do projeto
 
 ```text
-l'albero-di-ciliegio/
+l-albero-di-ciliegio/
 │
-├── index.html
-├── pages/
-│   └── ...
+├── index.html        (página inicial)
+├── produtos.html     (catálogo com busca e filtros)
+├── produto.html      (detalhes do produto)
+├── compra.html       (carrinho)
+├── checkout.html     (finalização e pagamento simulado)
+├── sucesso.html      (pedido confirmado)
+├── login.html
+├── cadastro.html
 │
 ├── css/
 │   └── style.css
 │
 ├── js/
-│   └── script.js
+│   ├── produtos.js   (lista de produtos, catálogo e detalhes)
+│   ├── script.js     (carrinho, cupom, tema e funções comuns)
+│   ├── carrinho.js   (tela do carrinho)
+│   ├── checkout.js   (checkout, pagamento e sucesso)
+│   └── acesso.js     (login e cadastro)
 │
 ├── img/
-│   └── ...
-│
 └── README.md
-...
+```
+
+## ▶️ Como executar
+
+Baixe o projeto e abra o arquivo `index.html` no navegador (ou use a extensão Live Server do VS Code).

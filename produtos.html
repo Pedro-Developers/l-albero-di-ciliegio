@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo | l'albero di ciliegio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container pagina">
+    <h1>Catálogo</h1>
+    <div class="filtros">
+      <input type="search" id="busca" placeholder="Buscar peças artesanais..." oninput="mostrarCatalogo()">
+      <label>Até <output id="valor-preco"></output> <input type="range" id="preco" min="5000" max="60000" step="1000" value="60000" oninput="mostrarCatalogo()"></label>
+      <select id="ordem" onchange="mostrarCatalogo()"><option value="">Ordenar</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option></select>
+      <select id="categoria" onchange="mostrarCatalogo()">
+        <option>Todos</option><option>Cerâmicas</option><option>Velas &amp; Aromas</option><option>Mesa &amp; Chá</option>
+      </select>
+    </div>
+    <section class="produtos" id="lista"></section>
+  </main>
+  <script src="produtos.js"></script>
+  <script src="script.js"></script>
+  <script>mostrarCatalogo();</script>
+  <script src="acesso.js"></script>
+</body>
+</html>
